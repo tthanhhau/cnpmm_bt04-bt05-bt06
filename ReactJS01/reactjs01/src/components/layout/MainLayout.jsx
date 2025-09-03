@@ -12,6 +12,7 @@ export default function MainLayout({ children }) {
   const { token, user, logout } = useAuth()
 
   const current = location.pathname.startsWith('/home') ? 'home' :
+                  location.pathname.startsWith('/products') ? 'products' :
                   location.pathname.startsWith('/login') ? 'login' :
                   location.pathname.startsWith('/register') ? 'register' : ''
 
@@ -25,6 +26,7 @@ export default function MainLayout({ children }) {
           selectedKeys={[current]}
           items={[
             { key:'home', label:<Link to="/home">Home</Link> },
+            { key:'products', label:<Link to="/products">Products</Link> },
             { key:'login', label:<Link to="/login">Login</Link> },
             { key:'register', label:<Link to="/register">Register</Link> },
           ]}
