@@ -31,7 +31,7 @@ const SearchFilters = ({
   useEffect(() => {
     const fetchFacets = async () => {
       try {
-        const response = await axios.get(`/api/search/facets?q=${encodeURIComponent(searchQuery)}`);
+        const response = await axios.get(`/search/facets?q=${encodeURIComponent(searchQuery)}`);
         if (response.data.success) {
           setFacets(response.data.data);
         }
@@ -243,7 +243,7 @@ const SearchFilters = ({
           </div>
         )}
 
-        <style jsx>{`
+        <style>{`
           .search-filters-mobile {
             position: relative;
             margin-bottom: 16px;
@@ -503,7 +503,7 @@ const SearchFilters = ({
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .search-filters {
           background: white;
           border: 1px solid #e5e7eb;

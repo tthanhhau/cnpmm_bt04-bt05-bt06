@@ -6,7 +6,7 @@ const {
   getSearchFacets,
   syncProducts,
   incrementProductViews
-} = require('../controllers/searchController');
+} = require('../controllers/searchController-simple');
 const { authenticateToken } = require('../middleware/auth');
 
 // Public search routes

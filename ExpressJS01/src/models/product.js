@@ -37,7 +37,6 @@ const productSchema = new mongoose.Schema(
     },
     slug: { 
       type: String, 
-      unique: true, 
       lowercase: true 
     },
     isActive: { 
@@ -94,7 +93,7 @@ productSchema.pre('validate', function(next) {
 
 // Index for efficient queries
 productSchema.index({ category: 1, isActive: 1 });
-// slug index is already created by unique: true
+productSchema.index({ slug: 1 }, { unique: true });
 productSchema.index({ featured: 1 });
 productSchema.index({ price: 1 });
 productSchema.index({ 'ratings.average': -1 });

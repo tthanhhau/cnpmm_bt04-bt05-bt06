@@ -4,7 +4,7 @@ let useElasticsearch = true;
 try {
   ({ client } = require('../config/elasticsearch'));
 } catch (error) {
-  console.log('⚠️  Elasticsearch not available, using fallback service');
+  // console.log('⚠️  Elasticsearch not available, using fallback service');
   useElasticsearch = false;
 }
 

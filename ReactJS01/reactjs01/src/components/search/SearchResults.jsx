@@ -169,7 +169,7 @@ const SearchResults = ({
           </button>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .search-results {
             flex: 1;
           }
@@ -241,7 +241,7 @@ const SearchResults = ({
           ))}
         </div>
 
-        <style jsx>{`
+        <style>{`
           .search-results {
             flex: 1;
           }
@@ -349,7 +349,7 @@ const SearchResults = ({
           </div>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .search-results {
             flex: 1;
           }
@@ -451,7 +451,7 @@ const SearchResults = ({
       {/* Pagination */}
       {renderPagination()}
 
-      <style jsx>{`
+      <style>{`
         .search-results {
           flex: 1;
         }

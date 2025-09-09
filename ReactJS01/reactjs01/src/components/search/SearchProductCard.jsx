@@ -51,7 +51,7 @@ const SearchProductCard = ({ product, showHighlight = false }) => {
   const handleClick = async () => {
     try {
       // Increment views
-      await axios.patch(`/api/search/products/${product.slug}/views`);
+      await axios.patch(`/search/products/${product.slug}/views`);
     } catch (error) {
       console.error('Error incrementing views:', error);
     }
@@ -160,7 +160,7 @@ const SearchProductCard = ({ product, showHighlight = false }) => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .search-product-card {
           background: white;
           border: 1px solid #e5e7eb;

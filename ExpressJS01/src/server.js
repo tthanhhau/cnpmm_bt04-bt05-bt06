@@ -13,6 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from root directory
+app.use(express.static('.'));
+
 const allowedOrigins = (process.env.CLIENT_URL || '').split(',').map(s => s.trim()).filter(Boolean);
 app.use(cors({
   origin: allowedOrigins.length ? allowedOrigins : ['http://localhost:5173'],
@@ -25,6 +28,20 @@ configViewEngine(app);
 app.get('/', (req, res) => {
   res.render('index', { title: 'ExpressJS01 API', time: new Date() });
 });
+
+// Debug routes
+app.get('/debug-routes', (req, res) => {
+  res.json({
+    message: 'Debug routes working',
+    availableRoutes: [
+      'GET /api/',
+      'GET /api/search',
+      'GET /api/products',
+      'POST /api/seed'
+    ]
+  });
+});
+
 app.use('/api', apiRoutes);
 
 // Initialize services
@@ -41,7 +58,7 @@ const initializeServices = async () => {
       await createProductsIndex();
       console.log('✅ Elasticsearch initialized successfully');
     } else {
-      console.log('⚠️  Elasticsearch not available - search features will be limited');
+      // console.log('⚠️  Elasticsearch not available - search features will be limited');
     }
   } catch (error) {
     console.error('❌ Error initializing services:', error);

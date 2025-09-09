@@ -4,6 +4,7 @@ import axios from '../util/axios';
 import SearchBar from '../components/search/SearchBar';
 import SearchFilters from '../components/search/SearchFilters';
 import SearchResults from '../components/search/SearchResults';
+import '../styles/search.css';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -128,7 +129,7 @@ const Search = () => {
         params.set('page', page.toString());
       }
 
-      const response = await axios.get(`/api/search?${params.toString()}`);
+      const response = await axios.get(`/search?${params.toString()}`);
       
       if (response.data.success) {
         setResults(response.data.data);

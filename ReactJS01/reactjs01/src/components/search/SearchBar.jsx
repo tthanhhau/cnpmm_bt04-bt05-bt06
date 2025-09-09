@@ -41,7 +41,7 @@ const SearchBar = ({ onSearch, placeholder = "Tìm kiếm sản phẩm...", show
     const timeoutId = setTimeout(async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(`/api/search/suggestions?q=${encodeURIComponent(searchQuery)}&limit=5`);
+        const response = await axios.get(`/search/suggestions?q=${encodeURIComponent(searchQuery)}&limit=5`);
         if (response.data.success) {
           setSuggestions(response.data.data);
           setShowSuggestionsList(true);
@@ -153,7 +153,7 @@ const SearchBar = ({ onSearch, placeholder = "Tìm kiếm sản phẩm...", show
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .search-bar-container {
           position: relative;
           width: 100%;

@@ -31,7 +31,7 @@ const mockClient = {
 
 // Test connection (always fails for fallback)
 const testConnection = async () => {
-  console.log('⚠️  Elasticsearch client not available - using fallback mode');
+  // console.log('⚠️  Elasticsearch client not available - using fallback mode');
   return false;
 };
 
