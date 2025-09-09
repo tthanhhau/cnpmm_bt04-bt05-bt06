@@ -33,48 +33,64 @@ const sampleCategories = [
 const sampleProducts = [
   // Electronics (20 products)
   {
-    name: 'Wireless Bluetooth Headphones',
-    description: 'High-quality wireless headphones with noise cancellation',
-    price: 199.99,
-    originalPrice: 249.99,
+    name: 'Tai nghe Bluetooth không dây',
+    description: 'Tai nghe không dây chất lượng cao với khử tiếng ồn',
+    price: 1990000,
+    originalPrice: 2490000,
     images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'],
     stock: 50,
     featured: true,
-    tags: ['wireless', 'bluetooth', 'audio']
+    tags: ['wireless', 'bluetooth', 'audio', 'tai nghe'],
+    views: 1250,
+    sales: 45,
+    ratings: { average: 4.5, count: 123 }
   },
   {
-    name: 'Smart Phone Pro Max',
-    description: 'Latest smartphone with advanced camera and features',
-    price: 899.99,
+    name: 'iPhone 15 Pro Max',
+    description: 'Điện thoại thông minh cao cấp với camera tiên tiến và nhiều tính năng',
+    price: 29990000,
+    originalPrice: 34990000,
     images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400'],
     stock: 30,
     featured: true,
-    tags: ['smartphone', 'mobile', 'technology']
+    tags: ['smartphone', 'mobile', 'technology', 'iphone', 'apple'],
+    views: 2890,
+    sales: 78,
+    ratings: { average: 4.8, count: 234 }
   },
   {
-    name: 'Gaming Laptop',
-    description: 'High-performance laptop for work and gaming',
-    price: 1299.99,
+    name: 'Laptop Gaming MSI',
+    description: 'Laptop hiệu suất cao cho công việc và chơi game',
+    price: 25990000,
     images: ['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400'],
     stock: 20,
-    tags: ['laptop', 'computer', 'gaming']
+    tags: ['laptop', 'computer', 'gaming', 'msi'],
+    views: 1890,
+    sales: 23,
+    ratings: { average: 4.3, count: 89 }
   },
   {
-    name: 'Wireless Mouse',
-    description: 'Ergonomic wireless mouse with precision tracking',
-    price: 49.99,
-    originalPrice: 69.99,
+    name: 'Chuột không dây Logitech',
+    description: 'Chuột không dây tiện dụng với độ chính xác cao',
+    price: 790000,
+    originalPrice: 990000,
     images: ['https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400'],
     stock: 120,
-    tags: ['mouse', 'wireless', 'computer']
+    tags: ['mouse', 'wireless', 'computer', 'chuột', 'logitech'],
+    views: 890,
+    sales: 156,
+    ratings: { average: 4.2, count: 67 }
   },
   {
-    name: 'Mechanical Keyboard',
-    description: 'RGB mechanical keyboard with tactile switches',
-    price: 159.99,
+    name: 'Bàn phím cơ Gaming RGB',
+    description: 'Bàn phím cơ RGB với switch tactile cho game thủ',
+    price: 2190000,
     images: ['https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400'],
     stock: 80,
-    tags: ['keyboard', 'mechanical', 'gaming']
+    tags: ['keyboard', 'mechanical', 'gaming', 'bàn phím', 'rgb'],
+    views: 1456,
+    sales: 89,
+    ratings: { average: 4.6, count: 145 }
   },
   {
     name: '4K Monitor',

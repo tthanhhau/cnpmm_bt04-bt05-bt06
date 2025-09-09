@@ -9,6 +9,7 @@ const userController = require('../controllers/userController');
 // Import route modules
 const categoryRoutes = require('./categories');
 const productRoutes = require('./products');
+const searchRoutes = require('./search');
 
 // Public
 router.get('/', (req, res) => res.json({ status: 'OK', api: 'ExpressJS01' }));
@@ -21,5 +22,6 @@ router.get('/homepage', delay(200), auth, homeController.homepage);
 // Public API routes
 router.use('/categories', categoryRoutes);
 router.use('/products', productRoutes);
+router.use('/search', searchRoutes);
 
 module.exports = router;

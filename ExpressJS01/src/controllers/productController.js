@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Category = require('../models/category');
+const elasticsearchService = require('../services/elasticsearchService');
 
 // Get products with pagination and filtering
 const getProducts = async (req, res) => {
@@ -198,6 +199,14 @@ const createProduct = async (req, res) => {
     await product.save();
     await product.populate('category', 'name slug');
 
+    // Index product in Elasticsearch
+    try {
+      await elasticsearchService.indexProduct(product);
+    } catch (esError) {
+      console.error('❌ Error indexing product in Elasticsearch:', esError);
+      // Don't fail the request if Elasticsearch indexing fails
+    }
+
     res.status(201).json({
       success: true,
       data: product,
@@ -219,10 +228,83 @@ const createProduct = async (req, res) => {
   }
 };
 
+// Update product (admin only)
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true, runValidators: true }
+    ).populate('category', 'name slug');
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Update product in Elasticsearch
+    try {
+      await elasticsearchService.indexProduct(product);
+    } catch (esError) {
+      console.error('❌ Error updating product in Elasticsearch:', esError);
+    }
+
+    res.status(200).json({
+      success: true,
+      data: product,
+      message: 'Product updated successfully'
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Error updating product',
+      error: error.message
+    });
+  }
+};
+
+// Delete product (admin only)
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Remove product from Elasticsearch
+    try {
+      await elasticsearchService.deleteProduct(id);
+    } catch (esError) {
+      console.error('❌ Error deleting product from Elasticsearch:', esError);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Product deleted successfully'
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Error deleting product',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getProducts,
   getProductsByCategory,
   getProductBySlug,
   getFeaturedProducts,
-  createProduct
+  createProduct,
+  updateProduct,
+  deleteProduct
 };

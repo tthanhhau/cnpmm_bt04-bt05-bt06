@@ -55,7 +55,23 @@ const productSchema = new mongoose.Schema(
     tags: [{ 
       type: String, 
       trim: true 
-    }]
+    }],
+    views: {
+      type: Number,
+      default: 0,
+      min: 0
+    },
+    sales: {
+      type: Number,
+      default: 0,
+      min: 0
+    },
+    discountPercentage: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100
+    }
   },
   { timestamps: true }
 );
@@ -78,7 +94,29 @@ productSchema.pre('validate', function(next) {
 
 // Index for efficient queries
 productSchema.index({ category: 1, isActive: 1 });
-productSchema.index({ slug: 1 });
+// slug index is already created by unique: true
 productSchema.index({ featured: 1 });
+productSchema.index({ price: 1 });
+productSchema.index({ 'ratings.average': -1 });
+productSchema.index({ views: -1 });
+productSchema.index({ sales: -1 });
+productSchema.index({ discountPercentage: -1 });
+
+// Virtual for checking if product has discount
+productSchema.virtual('hasDiscount').get(function() {
+  return this.originalPrice && this.originalPrice > this.price;
+});
+
+// Virtual for calculating discount percentage
+productSchema.virtual('calculatedDiscountPercentage').get(function() {
+  if (this.originalPrice && this.originalPrice > this.price) {
+    return Math.round(((this.originalPrice - this.price) / this.originalPrice) * 100);
+  }
+  return this.discountPercentage || 0;
+});
+
+// Ensure virtual fields are serialized
+productSchema.set('toJSON', { virtuals: true });
+productSchema.set('toObject', { virtuals: true });
 
 module.exports = mongoose.model('Product', productSchema);

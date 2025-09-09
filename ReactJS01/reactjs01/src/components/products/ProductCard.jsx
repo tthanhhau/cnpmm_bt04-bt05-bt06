@@ -1,15 +1,40 @@
 import React from 'react';
 import { Card, Typography, Tag, Button, Rate } from 'antd';
 import { ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import axios from '../../util/axios';
 
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
+  const navigate = useNavigate();
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   const discountPercentage = hasDiscount 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    }).format(price);
+  };
+
+  const handleViewDetails = async () => {
+    try {
+      // Increment views
+      await axios.patch(`/api/search/products/${product.slug}/views`);
+    } catch (error) {
+      console.error('Error incrementing views:', error);
+    }
+    
+    if (onViewDetails) {
+      onViewDetails(product);
+    } else {
+      navigate(`/products/${product.slug}`);
+    }
+  };
 
   return (
     <Card
@@ -82,7 +107,7 @@ const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
         <Button 
           type="text" 
           icon={<EyeOutlined />} 
-          onClick={() => onViewDetails?.(product)}
+          onClick={handleViewDetails}
         >
           View
         </Button>,
@@ -137,7 +162,7 @@ const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
         <div style={{ marginTop: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>
-              ${product.price}
+              {formatPrice(product.price)}
             </Text>
             {hasDiscount && (
               <Text 
@@ -145,7 +170,7 @@ const ProductCard = ({ product, onViewDetails, onAddToCart }) => {
                 type="secondary" 
                 style={{ fontSize: '12px' }}
               >
-                ${product.originalPrice}
+                {formatPrice(product.originalPrice)}
               </Text>
             )}
           </div>

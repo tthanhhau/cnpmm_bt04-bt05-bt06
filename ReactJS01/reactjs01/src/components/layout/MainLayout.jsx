@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout, Menu, Button, Typography } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
+import SearchBar from '../search/SearchBar.jsx'
 
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
@@ -13,13 +14,14 @@ export default function MainLayout({ children }) {
 
   const current = location.pathname.startsWith('/home') ? 'home' :
                   location.pathname.startsWith('/products') ? 'products' :
+                  location.pathname.startsWith('/search') ? 'search' :
                   location.pathname.startsWith('/login') ? 'login' :
                   location.pathname.startsWith('/register') ? 'register' : ''
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ display:'flex', alignItems:'center', gap:16 }}>
-        <Title level={4} style={{ margin:0, color:'#fff' }}>ReactJS01</Title>
+      <Header style={{ display:'flex', alignItems:'center', gap:16, padding: '0 24px' }}>
+        <Title level={4} style={{ margin:0, color:'#fff', minWidth: 'fit-content' }}>ReactJS01</Title>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -27,14 +29,21 @@ export default function MainLayout({ children }) {
           items={[
             { key:'home', label:<Link to="/home">Home</Link> },
             { key:'products', label:<Link to="/products">Products</Link> },
+            { key:'search', label:<Link to="/search">Search</Link> },
             { key:'login', label:<Link to="/login">Login</Link> },
             { key:'register', label:<Link to="/register">Register</Link> },
           ]}
-          style={{ flex:1 }}
+          style={{ minWidth: 'fit-content' }}
         />
+        <div style={{ flex: 1, maxWidth: '400px', margin: '0 16px' }}>
+          <SearchBar 
+            placeholder="Tìm kiếm sản phẩm..."
+            showSuggestions={true}
+          />
+        </div>
         {token ? (
           <>
-            <span style={{ color:'#fff' }}>{user?.name}</span>
+            <span style={{ color:'#fff', minWidth: 'fit-content' }}>{user?.name}</span>
             <Button onClick={() => { logout(); navigate('/login') }}>Logout</Button>
           </>
         ) : null}
